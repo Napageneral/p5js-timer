@@ -1,10 +1,12 @@
-var counter = 0;
+var currentTime=0;
 var timeLeft = 10;
 
 
 
 function setup(){
 	noCanvas();
+
+	startTime = millis();
 
 	var params = getURLParams();
 
@@ -15,7 +17,7 @@ function setup(){
 
 
 	var timer = select('#timer');
-	timer.html(convertSeconds(timeLeft-counter));
+	timer.html(convertSeconds(timeLeft-currentTime));
 
 	function convertSeconds(s) {
 		var min = floor(s/60);
@@ -24,15 +26,15 @@ function setup(){
 	}
 
 	function timeIt() {
-		counter++;
-		timer.html(convertSeconds(timeLeft-counter));
-		if (counter == timeLeft){
-			clearInterval();
+		currentTime = floor((millis()-startTime)/1000);
+		timer.html(convertSeconds(timeLeft-currentTime));
+		if (currentTime == timeLeft){
+			clearInterval(interval);
 		}
 	}
 
 
-	setInterval(timeIt, 1000);
+	interval = setInterval(timeIt, 1000);
 
 
 }
